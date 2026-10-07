@@ -1,0 +1,8 @@
+id,tray,urgency_1to5,human,confidence,mode
+1,needs_reply,5,0.90,0.80,mock
+2,updates,2,0.05,0.80,mock
+3,promos,1,0.08,0.80,mock
+4,sales,2,0.50,0.80,mock
+5,spam,2,0.15,0.80,mock
+6,updates,4,0.05,0.80,mock
+7,needs_reply,3,0.90,0.80,mock

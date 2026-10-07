@@ -1,0 +1,21 @@
+{
+  "name": "jev-moderation-scorer",
+  "version": "0.1.0",
+  "description": "Batch moderation scorer built on TypeSafe Jev (System One decision model)",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "score": "tsx src/cli.ts score",
+    "batch": "tsx src/cli.ts batch",
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

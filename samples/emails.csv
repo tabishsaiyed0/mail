@@ -1,0 +1,8 @@
+id,from,subject,body
+1,alice@example.com,Contract signature needed today,"Hi — the client contract needs your signature by 5pm today, they're blocked until you sign. Thanks!"
+2, Chase Alerts <alerts@chase.com>,Your statement is ready,"Your March statement is available. No action needed."
+3,newsletter@brand.com,Spring sale ends tonight — 40% off,"Unsubscribe anytime. Shop the spring sale before midnight!"
+4,outbound@saas.io,Quick 15-min demo?,"Hi! Saw your team and thought our pipeline tool could 10x your ROI. Book a slot?"
+5,security@paypaI.example,Your account is suspended — verify now,"Click http://verify.example/login to restore access within 24 hours."
+6,otp@service.com,Your verification code: 482913,"Your code is 482913. It expires in 10 minutes."
+7,mom@family.org,Sunday dinner?,"No rush, just wondering if you're free Sunday. Let me know when you can!"
