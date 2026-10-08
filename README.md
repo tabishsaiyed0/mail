@@ -7,8 +7,10 @@ One Jev call, 5 questions in parallel: `choice` (category) + 3× `noul` (spam / 
 ```bash
 npm install
 npx tsx src/cli.ts score "You are an idiot, shut up"
-npx tsx src/cli.ts batch samples/comments.csv out.csv
+npx tsx src/cli.ts batch samples/comments.csv out.csv --concurrency 5
 ```
+
+`batch` / `email-batch` run with `--concurrency N` (default 5, or `BATCH_CONCURRENCY`), retry failed Jev calls `--retries N` (default 2), and cache results in `<out>.cache.json` so re-runs are instant. Use `--cache path`, or `--no-cache` to disable. Output ends with `total / cached / fresh / failed` + action counts.
 
 ## Use real Jev
 

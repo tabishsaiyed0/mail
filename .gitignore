@@ -3,3 +3,5 @@ node_modules/
 .env
 *.log
 out.csv
+email-out.csv
+*.cache.json
