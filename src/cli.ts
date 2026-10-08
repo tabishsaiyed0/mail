@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { evaluatePost } from "./jev.js";
 import { decide } from "./policy.js";
 import { evaluateEmail, inboxRank } from "./email.js";
+import { decideEmail } from "./emailPolicy.js";
 
 function csvEscape(v: string | number): string {
   const s = String(v);
@@ -84,10 +85,13 @@ async function batch(inPath: string, outPath: string) {
 async function emailScoreOne(from: string, subject: string, body: string) {
   const { response, mocked } = await evaluateEmail(from, subject, body);
   const a = response.answers;
+  const { action, reasons } = decideEmail(response);
   console.log(
     JSON.stringify(
       {
         mode: mocked ? "mock (no key)" : "jev",
+        action,
+        reasons,
         tray: a.tray.choice,
         tray_confidence: a.tray.confidence,
         tray_top2: Object.entries(a.tray.probabilities)
@@ -133,18 +137,22 @@ function parseEmailCsv(path: string): { id: string; from: string; subject: strin
 
 async function emailBatch(inPath: string, outPath: string) {
   const rows = parseEmailCsv(inPath);
-  const out = ["id,tray,urgency_1to5,human,confidence,mode"];
+  const out = ["id,action,reasons,tray,urgency_1to5,human,confidence,mode"];
   const ranked: { id: string; tray: string; urgency1to5: number; confidence: number }[] = [];
+  const counts: Record<string, number> = {};
   for (const r of rows) {
     const { response, mocked } = await evaluateEmail(r.from, r.subject, r.body);
     const a = response.answers;
     const u = Math.round(a.urgency.score) + 1;
+    const { action, reasons } = decideEmail(response);
+    counts[action] = (counts[action] ?? 0) + 1;
     ranked.push({ id: r.id, tray: a.tray.choice, urgency1to5: u, confidence: a.tray.confidence });
-    out.push([r.id, a.tray.choice, u, a.is_human.noul.toFixed(2), a.tray.confidence.toFixed(2), mocked ? "mock" : "jev"].join(","));
-    console.log(`${r.id} -> ${a.tray.choice} (urgency ${u}/5, human ${a.is_human.noul.toFixed(2)})`);
+    out.push([r.id, action, csvEscape(reasons.join("; ")), a.tray.choice, u, a.is_human.noul.toFixed(2), a.tray.confidence.toFixed(2), mocked ? "mock" : "jev"].join(","));
+    console.log(`${r.id} -> ${action} [${a.tray.choice} urgency ${u}/5] (${reasons.join("; ")})`);
   }
   writeFileSync(outPath, out.join("\n") + "\n");
   console.log(`\nwrote ${rows.length} rows -> ${outPath}`);
+  console.log(`actions: ${Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
   console.log("inbox-zero (needs_reply by urgency):");
   for (const r of inboxRank(ranked.filter((x) => x.tray === "needs_reply")))
     console.log(`  #${r.id} urgency ${r.urgency1to5}/5`);

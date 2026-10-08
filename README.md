@@ -16,7 +16,7 @@ npx tsx src/cli.ts batch samples/comments.csv out.csv
 2. `copy .env.example .env` → set `TYPESAFE_API_KEY`
 3. Same commands now hit `POST https://api.typesafe.ai/v1/systemone` (`jev-latest`).
 
-## Email triage (Jevmail-style)
+## Email triage
 
 Same pattern, different questions: `tray` (choice: needs_reply / updates / promos / sales / spam) + `urgency` (score 1–5) + `is_human` (noul), one call per message.
 
@@ -25,6 +25,6 @@ npx tsx src/cli.ts email-score "alice@example.com" "Contract signature needed" "
 npx tsx src/cli.ts email-batch samples/emails.csv email-out.csv
 ```
 
-`email-batch` prints per-message tray + urgency and an inbox-zero view (needs_reply sorted by urgency). Mock mode works without a key; set `TYPESAFE_API_KEY` for real Jev.
+`email-batch` prints per-message action (`escalate | inbox | file | review | quarantine`) + tray + urgency, plus an inbox-zero view (needs_reply sorted by urgency). Policy lives in `src/emailPolicy.ts` — tune thresholds in `.env`. Mock mode works without a key; set `TYPESAFE_API_KEY` for real Jev.
 
 Tune thresholds in `.env`, not the prompts — that's the System One pattern.

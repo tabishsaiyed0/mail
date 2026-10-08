@@ -1,8 +1,8 @@
-id,tray,urgency_1to5,human,confidence,mode
-1,needs_reply,5,0.90,0.80,mock
-2,updates,2,0.05,0.80,mock
-3,promos,1,0.08,0.80,mock
-4,sales,2,0.50,0.80,mock
-5,spam,2,0.15,0.80,mock
-6,updates,4,0.05,0.80,mock
-7,needs_reply,3,0.90,0.80,mock
+id,action,reasons,tray,urgency_1to5,human,confidence,mode
+1,escalate,tray=needs_reply; urgency=5/5; human=0.90,needs_reply,5,0.90,0.80,mock
+2,file,tray=updates; urgency=2/5; human=0.05,updates,2,0.05,0.80,mock
+3,file,tray=promos; urgency=1/5; human=0.08,promos,1,0.08,0.80,mock
+4,file,tray=sales; urgency=2/5; human=0.50,sales,2,0.50,0.80,mock
+5,quarantine,tray=spam; human=0.15,spam,2,0.15,0.80,mock
+6,file,tray=updates; urgency=4/5; human=0.05,updates,4,0.05,0.80,mock
+7,inbox,tray=needs_reply; urgency=3/5,needs_reply,3,0.90,0.80,mock
