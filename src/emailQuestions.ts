@@ -1,5 +1,4 @@
-// Jevmail-style questions: 1 choice + 1 score + 1 noul, answered in parallel.
-// Mirrors https://github.com/fazlerocks/jevmail — tray, urgency, human-written.
+// Email triage questions: 1 choice + 1 score + 1 noul, answered in parallel.
 
 export const EMAIL_QUESTIONS = {
   tray: {
